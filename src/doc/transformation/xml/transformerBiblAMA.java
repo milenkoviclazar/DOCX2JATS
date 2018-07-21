@@ -37,7 +37,7 @@ public class transformerBiblAMA {
 			Pattern k1 = Pattern.compile("reference|[Сс]писок\\s*(?:використаної)?[ ]літератури", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 			Matcher mSecTitle = k1.matcher(articleSectionTitle.getTextContent().trim());
 			if (mSecTitle.find()) {
-				referenceMsg = "reference list has been found";
+				referenceMsg = "reference list has been found" + articleSectionTitle.toString();
 			    referenceParsing(document, xPath, articleSectionTitle);
 			}
 		}
@@ -68,6 +68,13 @@ public class transformerBiblAMA {
 			reflist.appendChild(ref);
 			Element elementCitation = document.createElement("element-citation");
 			ref.appendChild(elementCitation);
+
+			Element refTxt = document.createElement("source");
+			elementCitation.appendChild(refTxt);
+			refTxt.setTextContent(references.item(j).getTextContent());
+			if (1 != 0) {
+				continue;
+			}
 			// TODO set attribute to element-citation
 			Element personGroup = document.createElement("person-group");
 			personGroup.setAttribute("person-group-type", "author");
@@ -79,7 +86,7 @@ public class transformerBiblAMA {
 			 * */
 			Pattern k2add = Pattern.compile("(?:\\G|^)[^.]+?(?<givenNames>\\b([A-Z\\-]{1,6})\\b)"); //all author initialls before first dot
 			Matcher m2add = k2add.matcher(references.item(j).getTextContent());
-			
+
 			Pattern k2 = Pattern.compile("(.*?)(?:\\[.*\\])?\\.(.*?).*"); // Assume that all authors are before first dot
 			Matcher m2 = k2.matcher(references.item(j).getTextContent());
 			

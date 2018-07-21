@@ -44,6 +44,7 @@ public class docIngestion {
  
     public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, IOException, ParserConfigurationException, SAXException, CustomExceptions, URISyntaxException {
     	String docxInputFile = args[0];
+		System.out.println(args[0]);
     	if (!(docxInputFile.endsWith("docx"))) {
     		throw new CustomExceptions("Input file extension must be .docx");
     	}
