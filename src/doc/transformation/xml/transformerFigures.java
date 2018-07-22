@@ -25,7 +25,7 @@ import org.w3c.dom.Text;
 
 public class transformerFigures {
 	
-	static void transformerFiguresImpl (Document document) throws XPathExpressionException {
+	static void transformerFiguresImpl (Document document, String pathToImage) throws XPathExpressionException {
 	
 		XPath xPath =  XPathFactory.newInstance().newXPath();
 		
@@ -72,14 +72,20 @@ public class transformerFigures {
 		    Element figureCommentary = customMethods.getNextElement(figure);
 		    
 		    Pattern k3 = Pattern.compile("^\\s*\\*"); //first * symbol ignoring whitespaces
-		    Matcher m3 = k3.matcher(figureCommentary.getTextContent());
-		    if (m3.find()) {
-		    	figureCaption.appendChild(figureCommentary);
-		    }
+
+			Matcher m3;
+			try {
+				m3 = k3.matcher(figureCommentary.getTextContent());
+				if (m3.find()) {
+					figureCaption.appendChild(figureCommentary);
+				}
+			} catch (Exception e) {
+				m3 = k3.matcher("");
+			}
 		    
 		    //set figure link
 		    Element figureLink = document.createElement("graphic");
-		    figureLink.setAttribute("xlink:href", "https://e-medjournal.com/suppl/");
+		    figureLink.setAttribute("xlink:href", "http://contourjournal.org/public/images/" + pathToImage + "/" + p + ".jpg");
 		    figure.appendChild(figureLink);
 		    
 		    

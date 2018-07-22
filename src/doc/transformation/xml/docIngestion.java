@@ -49,12 +49,12 @@ public class docIngestion {
     		throw new CustomExceptions("Input file extension must be .docx");
     	}
     	String newJATSOutput = args[1];
-    	
-    	ingestionAndTransform(docxInputFile, newJATSOutput);
+    	String pathToImage = args[2];
+    	ingestionAndTransform(docxInputFile, newJATSOutput, pathToImage);
        
     }
 
-	private static void ingestionAndTransform(String docxInputFile, String newJATSOutput)
+	private static void ingestionAndTransform(String docxInputFile, String newJATSOutput, String pathToImage)
 			throws TransformerFactoryConfigurationError, TransformerConfigurationException, TransformerException,
 			XPathExpressionException, FileNotFoundException, URISyntaxException {
 		
@@ -120,7 +120,7 @@ public class docIngestion {
 	            
 	    transformerArticleBack.transformerArticleBackMethod(document);
 	    transformerBiblAMA.transformerBiblFinder(document);
-	    transformerFigures.transformerFiguresImpl(document);
+	    transformerFigures.transformerFiguresImpl(document, pathToImage);
 	    transformerTables.transformerTablesImpl(document);
 	    transformerInTextCit.textTransformCitations(document);
 	    transformerFigRefs.transformerFigRefsImpl(document);
